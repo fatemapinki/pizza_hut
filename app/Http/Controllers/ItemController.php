@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Item;
 use Illuminate\Http\Request;
 
@@ -36,19 +37,17 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'pizza_name'=>'required',
-            'pizza_description'=> 'required|string',
+            'pizza_name' => 'required',
+            'pizza_description' => 'required|string',
             'pizza_price' => 'required|integer'
-            ]);
-            $item = new Item([
+        ]);
+        $item = new Item([
             'pizza_name' => $request->get('pizza_name'),
-            'pizza_desc'=> $request->get('pizza_description'),
-            'pizza_price'=> $request->get('pizza_price')
-            ]);
-            $item->save();
-                return redirect('/pizza')->with('success', 'Item has been added');
-            
-            
+            'pizza_desc' => $request->get('pizza_description'),
+            'pizza_price' => $request->get('pizza_price')
+        ]);
+        $item->save();
+        return redirect('/pizza')->with('success', 'Item has been added');
     }
 
     /**
@@ -57,7 +56,7 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
     public function show($id)
     {
         //
@@ -69,11 +68,11 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
     public function edit($id)
     {
         $items = Item::find($id);
-return view('items.edit', compact('items'));
+        return view('items.edit', compact('items'));
     }
 
     /**
@@ -83,7 +82,7 @@ return view('items.edit', compact('items'));
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
     public function update(Request $request, $id)
     {
         //
@@ -97,9 +96,9 @@ return view('items.edit', compact('items'));
      */
     public function destroy($id)
     {
-        //
+        $items = Item::find($id);
+        $items->delete();
+        return redirect('/pizza')->with('success', 'Item has been deleted 
+       Successfully');
     }
 }
-    
-    
-
